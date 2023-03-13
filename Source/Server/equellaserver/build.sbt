@@ -3,7 +3,7 @@ import Path.rebase
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-javacOptions ++= Seq("-source", "1.8")
+javacOptions ++= Seq("--release", "11")
 
 (Compile / resourceDirectory) := baseDirectory.value / "resources"
 
@@ -17,19 +17,19 @@ updateOptions := updateOptions.value.withCachedResolution(true)
 (Runtime / unmanagedClasspath) += (LocalProject("learningedge_config") / baseDirectory).value
 
 val RestEasyVersion   = "3.15.3.Final"
-val SwaggerVersion    = "1.6.6"
-val TomcatVersion     = "9.0.67"
+val SwaggerVersion    = "1.6.9"
+val TomcatVersion     = "9.0.72"
 val axis2Version      = "1.8.2"
 val circeVersion      = "0.12.1"
-val cxfVersion        = "3.5.3"
+val curatorVersion    = "5.4.0"
+val cxfVersion        = "3.5.5"
 val fs2Version        = "2.5.11"
 val guiceVersion      = "5.1.0"
-val jsassVersion      = "5.10.4"
-val jsoupVersion      = "1.14.3"
+val jsassVersion      = "5.10.5"
+val jsoupVersion      = "1.15.3"
 val prometheusVersion = "0.16.0"
-val springVersion     = "5.3.23"
 val sttpVersion       = "1.7.2"
-val tikaVersion       = "2.4.1"
+val tikaVersion       = "2.6.0"
 
 libraryDependencies ++= Seq(
   "io.circe" %% "circe-core",
@@ -63,10 +63,10 @@ libraryDependencies ++= Seq(
     ExclusionRule(organization = "org.apache.axis",
                   name = "axis")
   ),
-  "com.google.api-client" % "google-api-client"           % "2.0.0",
-  "com.google.apis"       % "google-api-services-books"   % "v1-rev20220318-2.0.0",
-  "com.google.apis"       % "google-api-services-youtube" % "v3-rev20220719-2.0.0",
-  "com.google.code.gson"  % "gson"                        % "2.9.1",
+  "com.google.api-client" % "google-api-client"           % "2.2.0",
+  "com.google.apis"       % "google-api-services-books"   % "v1-rev20230203-2.0.0",
+  "com.google.apis"       % "google-api-services-youtube" % "v3-rev20230123-2.0.0",
+  "com.google.code.gson"  % "gson"                        % "2.10.1",
   "com.google.gdata"      % "core"                        % "1.47.1",
   "com.google.guava"      % "guava"                       % "31.1-jre",
   "com.google.inject"     % "guice"                       % guiceVersion excludeAll (
@@ -84,7 +84,7 @@ libraryDependencies ++= Seq(
     ExclusionRule(organization = "aopalliance",
                   name = "aopalliance")
   ),
-  "com.ibm.icu" % "icu4j" % "71.1",
+  "com.ibm.icu" % "icu4j" % "72.1",
   sqlServerDep excludeAll (
     // Conflicts with RESTeasy jakarta.xml.bind-api
     ExclusionRule(organization = "javax.xml.bind"),
@@ -92,24 +92,24 @@ libraryDependencies ++= Seq(
     ExclusionRule(organization = "com.sun.xml.bind"),
     ExclusionRule(organization = "com.sun.jersey")
   ),
-  "com.miglayout"             % "miglayout-swing"       % "4.2",
-  "com.ning"                  % "async-http-client"     % "1.9.40",
-  "com.rometools"             % "rome"                  % "1.18.0",
-  "io.swagger"                % "swagger-core"          % SwaggerVersion,
-  "io.swagger"                % "swagger-annotations"   % SwaggerVersion,
-  "io.swagger"                % "swagger-jaxrs"         % SwaggerVersion,
-  "io.swagger"                %% "swagger-scala-module" % "1.0.6",
-  "com.zaxxer"                % "HikariCP"              % "4.0.3",
+  "com.miglayout" % "miglayout-swing"       % "4.2",
+  "com.ning"      % "async-http-client"     % "1.9.40",
+  "com.rometools" % "rome"                  % "1.19.0",
+  "io.swagger"    % "swagger-core"          % SwaggerVersion,
+  "io.swagger"    % "swagger-annotations"   % SwaggerVersion,
+  "io.swagger"    % "swagger-jaxrs"         % SwaggerVersion,
+  "io.swagger"    %% "swagger-scala-module" % "1.0.6",
+  // Exclude slf4j due to issue: https://github.com/brettwooldridge/HikariCP/issues/1746
+  "com.zaxxer"                % "HikariCP"              % "4.0.3" excludeAll ExclusionRule(organization = "org.slf4j"),
   "commons-beanutils"         % "commons-beanutils"     % "1.9.4",
   "commons-codec"             % "commons-codec"         % "1.15",
   "commons-collections"       % "commons-collections"   % "3.2.2",
   "commons-configuration"     % "commons-configuration" % "1.10",
-  "commons-daemon"            % "commons-daemon"        % "1.3.1",
+  "commons-daemon"            % "commons-daemon"        % "1.3.3",
   "commons-discovery"         % "commons-discovery"     % "0.5",
   "commons-httpclient"        % "commons-httpclient"    % "3.1",
   "commons-io"                % "commons-io"            % "2.11.0",
   "commons-lang"              % "commons-lang"          % "2.6",
-  "dom4j"                     % "dom4j"                 % "1.6.1",
   "com.github.equella.legacy" % "itunesu-api-java"      % "1.7",
   "com.github.equella.legacy" % "mets"                  % "1.0",
   "com.metamx"                % "extendedset"           % "1.5.0-mmx",
@@ -117,9 +117,9 @@ libraryDependencies ++= Seq(
   "javax.mail"                % "mail"                  % "1.4.7",
   "javax.servlet"             % "jstl"                  % "1.2",
   "javax.xml"                 % "jaxrpc"                % "1.1",
-  "jdom"                      % "jdom"                  % "1.1",
   "com.github.equella.jpf"    % "jpf"                   % "1.0.7",
   log4j,
+  log4jCore,
   log4jSlf4jImpl,
   "net.oauth.core"     % "oauth"                    % "20100527",
   "net.oauth.core"     % "oauth-provider"           % "20100527",
@@ -130,10 +130,10 @@ libraryDependencies ++= Seq(
   "org.apache.axis2"   % "axis2-adb"                % axis2Version,
   "org.apache.axis2"   % "axis2-transport-http"     % axis2Version,
   "org.apache.axis2"   % "axis2-transport-local"    % axis2Version,
-  "org.apache.commons" % "commons-compress"         % "1.21",
-  "org.apache.curator" % "curator-client"           % "5.3.0",
-  "org.apache.curator" % "curator-framework"        % "5.3.0",
-  "org.apache.curator" % "curator-recipes"          % "5.3.0",
+  "org.apache.commons" % "commons-compress"         % "1.22",
+  "org.apache.curator" % "curator-client"           % curatorVersion,
+  "org.apache.curator" % "curator-framework"        % curatorVersion,
+  "org.apache.curator" % "curator-recipes"          % curatorVersion,
   "org.apache.cxf"     % "cxf-rt-frontend-jaxws"    % cxfVersion,
   "org.apache.cxf"     % "cxf-rt-transports-http"   % cxfVersion,
   "org.apache.cxf"     % "cxf-rt-databinding-aegis" % cxfVersion,
@@ -161,8 +161,8 @@ libraryDependencies ++= Seq(
     ExclusionRule(organization = "com.sun.xml.fastinfoset"),
     ExclusionRule(organization = "net.sf.ehcache")
   ),
-  "org.apache.httpcomponents" % "httpclient"       % "4.5.13",
-  "org.apache.httpcomponents" % "httpcore"         % "4.4.15",
+  "org.apache.httpcomponents" % "httpclient"       % "4.5.14",
+  "org.apache.httpcomponents" % "httpcore"         % "4.4.16",
   "org.apache.lucene"         % "lucene-analyzers" % "3.6.2",
   "org.apache.lucene"         % "lucene-core"      % "3.6.2",
   "org.apache.lucene"         % "lucene-queries"   % "3.6.2",
@@ -194,11 +194,7 @@ libraryDependencies ++= Seq(
   "org.apache.tomcat"      % "tomcat-util-scan"       % TomcatVersion,
   "org.apache.tomcat"      % "tomcat-ssi"             % TomcatVersion,
   "org.apache.ws.security" % "wss4j"                  % "1.6.19",
-  "org.apache.zookeeper"   % "zookeeper"              % "3.7.0" excludeAll (
-    ExclusionRule(organization = "org.slf4j",
-                  name = "slf4j-log4j12")
-  ),
-  "org.ccil.cowan.tagsoup" % "tagsoup" % "1.2.1",
+  "org.ccil.cowan.tagsoup" % "tagsoup"                % "1.2.1",
   // Removed due to deduplication issues with woodstox-core. core-asl has not been updated for years.
   //   com.fasterxml.woodstox/woodstox-core/bundles/woodstox-core-5.0.3.jar:...
   //   org.codehaus.woodstox/woodstox-core-asl/jars/woodstox-core-asl-4.4.1.jar:...
@@ -213,28 +209,25 @@ libraryDependencies ++= Seq(
   "org.reactivestreams"             % "reactive-streams"               % "1.0.4",
   // Upgraded to 2.0.1.Final due to a deduplication issue with jakarta.ws.rs-api
   "org.jboss.spec.javax.ws.rs"           % "jboss-jaxrs-api_2.1_spec"     % "2.0.2.Final",
-  "org.eclipse.microprofile.rest.client" % "microprofile-rest-client-api" % "3.0",
-  "org.eclipse.microprofile.config"      % "microprofile-config-api"      % "3.0.1",
+  "org.eclipse.microprofile.rest.client" % "microprofile-rest-client-api" % "3.0.1",
+  "org.eclipse.microprofile.config"      % "microprofile-config-api"      % "3.0.2",
   "javax.json.bind"                      % "javax.json.bind-api"          % "1.0",
   "org.jsoup"                            % "jsoup"                        % jsoupVersion,
   xstreamDep,
   "org.opensaml" % "xmltooling" % "1.4.4" excludeAll ExclusionRule(organization = "org.slf4j"),
   postgresDep,
-  "org.scannotation"    % "scannotation"           % "1.0.3",
-  "org.slf4j"           % "jcl-over-slf4j"         % "1.7.36",
-  "org.slf4j"           % "slf4j-api"              % "1.7.36",
-  "org.springframework" % "spring-aop"             % springVersion,
-  "org.springframework" % "spring-context"         % springVersion,
+  "org.scannotation" % "scannotation"   % "1.0.3",
+  "org.slf4j"        % "jcl-over-slf4j" % "2.0.6",
+  "org.slf4j"        % "slf4j-api"      % "2.0.6",
+  springAop,
+  springWeb,
+  springContext,
   "org.springframework" % "spring-context-support" % springVersion excludeAll (
     ExclusionRule(organization = "jasperreports",
                   name = "jasperreports")
   ),
-  "org.springframework" % "spring-jdbc" % springVersion,
-  "org.springframework" % "spring-tx"   % springVersion,
-  "org.springframework" % "spring-web"  % springVersion,
-//  "org.springframework" % "spring-webmvc" % "2.5.5" excludeAll (
-//    ExclusionRule(organization = "jasperreports", name = "jasperreports")
-//    ),
+  "org.springframework"       % "spring-jdbc"       % springVersion,
+  "org.springframework"       % "spring-tx"         % springVersion,
   "stax"                      % "stax-api"          % "1.0.1",
   "taglibs"                   % "standard"          % "1.1.2",
   "com.github.equella.legacy" % "qtiworks-jqtiplus" % "1.0-beta3" excludeAll (
@@ -243,11 +236,11 @@ libraryDependencies ++= Seq(
     ExclusionRule(organization = "net.sf.saxon")
   ),
   "xml-resolver"                  % "xml-resolver"              % "1.2",
-  "org.scala-sbt"                 %% "io"                       % "1.7.0",
+  "org.scala-sbt"                 %% "io"                       % "1.8.0",
   "org.mozilla"                   % "rhino"                     % "1.7.14",
-  "io.lemonlabs"                  %% "scala-uri"                % "4.0.2",
-  "org.scala-lang.modules"        %% "scala-parser-combinators" % "2.1.1",
-  "io.github.classgraph"          % "classgraph"                % "4.8.149",
+  "io.lemonlabs"                  %% "scala-uri"                % "4.0.3",
+  "org.scala-lang.modules"        %% "scala-parser-combinators" % "2.2.0",
+  "io.github.classgraph"          % "classgraph"                % "4.8.154",
   "com.fasterxml"                 % "classmate"                 % "1.5.1",
   "org.glassfish"                 % "javax.el"                  % "3.0.1-b12",
   "jakarta.validation"            % "jakarta.validation-api"    % "3.0.2",
@@ -363,6 +356,9 @@ run := {
   case PathList("META-INF", "jdom-info.xml")                => MergeStrategy.first
   case PathList("META-INF", "axiom.xml")                    => MergeStrategy.first
   case PathList("javax", "wsdl", _*)                        => MergeStrategy.last
+  case PathList("javax", "xml", "soap", _*)                 => MergeStrategy.first
+  case PathList("javax", "transaction", _*)                 => MergeStrategy.first
+  case PathList("javax", "jws", _*)                         => MergeStrategy.first
   case PathList("com", "ibm", "wsdl", _*)                   => MergeStrategy.first
   case PathList("org", "apache", "regexp", _*)              => MergeStrategy.first
   case PathList("javax", "servlet", "jsp", _*)              => MergeStrategy.first
@@ -385,8 +381,8 @@ run := {
 
   // Due to the error: deduplicate: different file contents found in the following:
   // ...
-  //  .../org.apache.cxf/cxf-rt-frontend-jaxws/bundles/cxf-rt-frontend-jaxws-3.5.3.jar:META-INF/cxf/bus-extensions.txt
-  //  .../org.apache.cxf/cxf-rt-transports-http/bundles/cxf-rt-transports-http-3.5.3.jar:META-INF/cxf/bus-extensions.txt
+  //  .../org.apache.cxf/cxf-rt-frontend-jaxws/bundles/cxf-rt-frontend-jaxws-3.5.5.jar:META-INF/cxf/bus-extensions.txt
+  //  .../org.apache.cxf/cxf-rt-transports-http/bundles/cxf-rt-transports-http-3.5.5.jar:META-INF/cxf/bus-extensions.txt
   // ...
   // As per https://github.com/johnrengelman/shadow/issues/309 , combining the files.
   case PathList("META-INF", "cxf", "bus-extensions.txt") => MergeStrategy.filterDistinctLines

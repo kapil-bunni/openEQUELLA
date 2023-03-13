@@ -1,7 +1,7 @@
 import Path.{flat, rebase}
 import _root_.io.circe.parser._
 
-libraryDependencies += "org.mockito" % "mockito-core" % "4.8.0" % Test
+libraryDependencies += "org.mockito" % "mockito-core" % "5.1.1" % Test
 
 langStrings := {
   val langDir = (Compile / resourceDirectory).value / "com/tle/core/i18n/service/impl"
@@ -124,11 +124,15 @@ Compile / resourceGenerators += Def.task {
 Compile / resourceGenerators += Def.task {
   val outDir = (Compile / resourceManaged).value
   val srcDir = buildReactFrontEnd.value
-  IO.copy((srcDir ** ("*.js" | "*.css" | "*.json" | "*.html")).pair(rebase(srcDir, outDir))).toSeq
+  IO.copy(
+      (srcDir ** ("*.js" | "*.css" | "*.json" | "*.html" | "*.woff" | "*.woff2"))
+        .pair(rebase(srcDir, outDir)))
+    .toSeq
 }.taskValue
 
 clean := {
   clean.value
+  (inplaceEditorJar / clean).value
   val baseSwagger = baseDirectory.value / "swaggerui"
   Common.nodeScript("clean", baseSwagger)
 }
